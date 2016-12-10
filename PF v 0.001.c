@@ -1,28 +1,28 @@
 #include <stdio.h>
 #include <string.h>
 #include <conio.h>
+
 void cadastro(){
-	printf("Usuario cadastrado com sucesso");
-}
-void fim(){
-	printf("Programa finalizado");
+	printf("Usuario cadastrado com sucesso\n");
 }
 	
 void demitir(){
-	printf("O funcionario foi demitido");
+	printf("O funcionario foi demitido\n");
 }
 void transferir(){
-	printf("O usuario foi transferido");
+	printf("O usuario foi transferido\n");
 	
 }
 void menu(){
 	int resp;
 	printf("===============\n1 - Cadastrar\n2 - Demitir\n3 - Transferir\n0 - Sair\n===============\n");
 		scanf("%d", &resp);
+		while(resp != 0){
+			
 		switch(resp)
 		{
 		case 0:
-			fim();
+			printf("Programa finalizado\n");
 			break;
 		case 1:
 			cadastro();
@@ -34,9 +34,11 @@ void menu(){
 		   	transferir();
 		   	break;
 		default:
-			printf("nop");
+			printf("Nop,para de tentar achar bug ai,vlw\n");
 			break;
 		};
+		printf("===============\n1 - Cadastrar\n2 - Demitir\n3 - Transferir\n0 - Sair\n===============\n");
+		scanf("%d", &resp);}
 }
 	
 int main(){
