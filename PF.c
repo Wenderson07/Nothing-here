@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #define F 5
-
+int i=0;
 typedef struct{
 	int dia,mes,ano;	
 }tdata;
@@ -17,8 +17,6 @@ typedef struct{
 
 void cadastro(){
 	tFuncionario func[F];
-	int i;
-	for(i=0;i<F;i++){
 		printf("Digite o nome do usuario: ");
 		scanf(" %s", func[i].nome);
 		printf("Digite o cpf do usuario: ");
@@ -31,9 +29,9 @@ void cadastro(){
 		scanf(" %d", &func[i].cargo);
 		printf("Digite o numero do Departamento: ");
 		scanf(" %d", &func[i].dept);		
-		printf("Usuario cadastrado com sucesso\n");
+		printf("%s foi cadastrado com sucesso\n",func[i].nome);
 		printf("\n");
-	}
+		i++;
 	
 }
 
