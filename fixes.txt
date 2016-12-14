@@ -1,0 +1,14 @@
+S-tFuncionario fuc[f] was at cadastro...changed that to be global;
+S-add consulta , just for tests;
+S-
+
+
+
+
+
+
+TO DO:
+Consulta is bugging
+Functions
+
+
