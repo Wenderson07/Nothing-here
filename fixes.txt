@@ -1,6 +1,6 @@
+//Only engish, sem chorar 
 S-tFuncionario fuc[f] was at cadastro...changed that to be global;
 S-add consulta , just for tests;
-S-
 
 
 
@@ -8,7 +8,9 @@ S-
 
 
 TO DO:
-Consulta is bugging
+If necessary for tests, add + things at consula...like departamento or dates;
 Functions
 
 
+Done:
+Consulta fixed
