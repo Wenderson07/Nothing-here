@@ -5,7 +5,7 @@ int i=0;
 typedef struct{
 	int dia,mes,ano;	
 }tdata;
-
+//
 typedef struct{
 	char cpf[12];
 	char nome[100];
