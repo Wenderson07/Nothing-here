@@ -40,7 +40,7 @@ void consulta(){
 	char cpf[12];
 	int a;
 	printf("Digite o cpf do funcionario: ");
-	scanf(" %s",&cpf);
+	scanf(" %s", cpf);
 	for(int j= 0;j <= i;j++){
 		a = strcmp(cpf,func[j].cpf);
 		if (a ==0)
