@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#define F 3
+#define F 4
 
 int i=0;
 
@@ -46,7 +46,6 @@ Objetivo: verificar se uma data eh valida.
 Parâmetros: dia, mes, ano.
 Retorno: 1 se for data valida ou 0 se nao. 
 */
-
 //NO FINAL, AJEITAR O ANO.
 int ValidarData(int dia,int mes,int ano){	
 	if((dia >= 1 && dia <= 31) && (mes >= 1 && mes <= 12) && (ano >= 00 && ano <= 99)){
@@ -115,7 +114,7 @@ void criardep(){
 
 //Objetivo: Alterar informaçoes do Departamento.
 void alterardep(){ 
-	int resp,i=0,cont=0,resp2;
+	int resp,i,cont=0,resp2;
 	while(resp2!=0){
 		printf("Qual o codigo do Departamento? ");
 		scanf(" %d", &resp);
@@ -185,12 +184,67 @@ void listardep(){
 
 //Objetivo: Excluir Departamentos.
 //Nessa funçao de excluir provavelmente usasse ponteiro.
+/*AINDA PRECISA-SE AJEITAR ESSA PORRA, QUANDO EXCLUI UM DEPARTAMENTO, EM VEZ DO SUCESSOR TOMAR O LUGAR
+DO EXCLUIDO ELE APENAS SE COPIAR PARA ESSA POSIÇAO.*/
 void excluirdep(){
-	int resp,cod,j,cont
+	int resp,cod,j,cont,x;
+	char resp2;
 	
 	while(resp!=2){
 		printf("Qual o codigo do departamento?: ");
 		scanf(" %d", &cod);
+		for(j=0;j<10;j++){
+			if(dep[j].cod == cod){
+				cont++;
+				x = j;
+			}
+		}
+		if(cont==0){
+			printf("Departamento %d nao existe!\n", cod);
+			printf("---------------\n0 - Para retornar ao Menu Departamento\n1 - Digitar um novo codigo\n---------------\n");
+			scanf("%d", &resp);
+			if(resp==0)
+				return;
+		}
+		else{
+			printf("Departamento %d - Nome: %s\n               - Quantidade de Funcionarios: %d\n",x+1,dep[x].nome,dep[x].quant);
+			if(dep[x].quant!=0){
+				printf("Ha fucionario(s) lotado(s) no Departamento %d.", dep[x].cod);
+				printf(" Nao eh possivel excluir o departamento!\n");
+				printf("---------------\n0 - Para retornar ao Menu Departamento\n1 - Digitar um novo codigo\n---------------\n");
+				scanf("%d", &resp);
+				if(resp==0)
+					return;
+			}
+			break;
+		}
+	}
+	while((resp2!='s') || (resp2!='n')){
+		printf("Deseja realmente excluir o departamento? <s/n>: ");
+		scanf(" %c", &resp2);
+		if(resp2=='n'){
+			printf("Departamento nao excluido!\n");
+			return;
+		}
+		if(resp2=='s'){
+			for(j=0;j<10;j++){
+				if(dep[j].cod == cod){
+					dep[j].cod=dep[j+1].cod;
+					strcpy(dep[j].nome,dep[j+1].nome);
+					dep[j].quant=dep[j+1].quant;
+					if(dep[j].cod!=0){
+						dep[j+1].cod=dep[x].cod;
+						strcpy(dep[j+1].nome,dep[x].nome);
+						dep[j+1].quant=dep[x].quant;
+					}
+				}
+			}
+			dep[10-1].cod=0;
+			strcpy(dep[10-1].nome,"");
+			dep[10-1].quant=0;
+			printf("Departamento excluido com sucesso!\n");
+			break;
+		}
 	}
 }
 
@@ -239,7 +293,7 @@ void cadastrar(){
 			break;
 		}
 	}
-	printf("Qual a data de admissão na empresa?: ");
+	printf("Qual a data de admissao na empresa?: ");
 	scanf("%d %d %d", &func[i].dt_adm.dia,&func[i].dt_adm.mes,&func[i].dt_adm.ano);
 	y = ValidarData(func[i].dt_adm.dia,func[i].dt_adm.mes,func[i].dt_adm.ano);
 	while(y==0){
@@ -514,10 +568,10 @@ void transferir(){
 
 //Objetivo: Demitir um funcionario.
 /*Quando se excluir um funcionario q esta outros dois ele invez de deslocar as informaçoes do sucessor
-para o lugar do excluido ele apenas faz eh copiar.*/
-//Aki tbm deve-se se usar ponteiro tbm.
+para o lugar do excluido ele apenas faz eh copiar.*/ // < Agora so aparece esse problema se for ficar so um funcionario.
+//Aki provavelmente tbm deveria se usar ponteiro tbm.
 void demitir(){
-	int resp,j,cod,cont=0,x,a;
+	int resp,j,cod,cont=0,x,y,a,b;
 	char cpf[12],resp2;
 	
 	while(resp!=2){
@@ -554,6 +608,7 @@ void demitir(){
 				a = strcmp(func[j].cpf,cpf);
 				if (a==0){
 					cont++;
+					y = j;
 				}	
 			}
 		}
@@ -572,7 +627,7 @@ void demitir(){
 		printf("Deseja realmente demitir o funcionario? <s/n>: ");
 		scanf(" %c", &resp2);
 		if(resp2=='n'){
-			printf("Funcionario não demitido!\n");
+			printf("Funcionario nao demitido!\n");
 			return;
 		}
 		if(resp2=='s'){
@@ -585,8 +640,27 @@ void demitir(){
 					func[j].dt_adm = func[j+1].dt_adm;
 					func[j].cargo = func[j+1].cargo;
 					func[j].dept = func[j+1].dept;
+					b = strcmp(func[j].cpf,cpf);
+					if(b!=0){
+						strcpy(func[j+1].cpf,func[y].cpf);
+						strcpy(func[j+1].nome,func[y].nome);
+						func[j+1].dt_nasc = func[y].dt_nasc;
+						func[j+1].dt_adm = func[y].dt_adm;
+						func[j+1].cargo = func[y].cargo;
+						func[j+1].dept = func[y].dept;
+					}
 				}
 			}
+			strcpy(func[F-1].cpf,"");
+			strcpy(func[F-1].nome,"");
+		   	func[F-1].dt_nasc.dia = 0;
+			func[F-1].dt_nasc.mes = 0;
+			func[F-1].dt_nasc.ano = 0;
+			func[F-1].dt_adm.dia = 0;
+			func[F-1].dt_adm.mes = 0;
+			func[F-1].dt_adm.ano = 0;
+			func[F-1].cargo = 0;
+			func[F-1].dept = 0;
 			dep[x-1].quant = dep[x-1].quant - 1;
 			printf("Funcionario demitido com sucesso!\n");
 			break;
@@ -639,16 +713,18 @@ void listarfunc(){
 			cont++;
 		}
 		else{
-			printf("--------------------\nDepartamento %d\n--------------------\n", j+1);
-			for(k=0;k<F;k++){
-				if(func[k].dept==j+1){
-					printf("Funcionario %d\n", k+1);
-					printf("CPF: %s\n", func[k].cpf);
-					printf("Nome: %s\n", func[k].nome);
-					printf("Data de Nascimento: %d %d %d\n", func[k].dt_nasc.dia,func[k].dt_nasc.mes,func[k].dt_nasc.ano);
-					printf("Data de Admissao: %d %d %d\n", func[k].dt_adm.dia,func[k].dt_adm.mes,func[k].dt_adm.ano);
-					printf("Cargo: %d\n", func[k].cargo);
-					printf("\n");
+			if(dep[j].quant!=0){
+				printf("--------------------\nDepartamento %d\n--------------------\n", j+1);
+				for(k=0;k<F;k++){
+					if(func[k].dept==j+1){
+						printf("Funcionario %d\n", k+1);
+						printf("CPF: %s\n", func[k].cpf);
+						printf("Nome: %s\n", func[k].nome);
+						printf("Data de Nascimento: %d %d %d\n", func[k].dt_nasc.dia,func[k].dt_nasc.mes,func[k].dt_nasc.ano);
+						printf("Data de Admissao: %d %d %d\n", func[k].dt_adm.dia,func[k].dt_adm.mes,func[k].dt_adm.ano);
+						printf("Cargo: %d\n", func[k].cargo);
+						printf("\n");
+					}
 				}
 			}
 		}
