@@ -76,6 +76,7 @@ int ValidarData(int dia,int mes,int ano){
 	}
 }
 
+
 //PARTE DOS DEPARTAMENTOS
 
 //Objetivo: Criar Departamento.
@@ -183,8 +184,14 @@ void listardep(){
 }
 
 //Objetivo: Excluir Departamentos.
+//Nessa funçao de excluir provavelmente usasse ponteiro.
 void excluirdep(){
+	int resp,cod,j,cont
 	
+	while(resp!=2){
+		printf("Qual o codigo do departamento?: ");
+		scanf(" %d", &cod);
+	}
 }
 
 
@@ -506,6 +513,9 @@ void transferir(){
 }
 
 //Objetivo: Demitir um funcionario.
+/*Quando se excluir um funcionario q esta outros dois ele invez de deslocar as informaçoes do sucessor
+para o lugar do excluido ele apenas faz eh copiar.*/
+//Aki tbm deve-se se usar ponteiro tbm.
 void demitir(){
 	int resp,j,cod,cont=0,x,a;
 	char cpf[12],resp2;
@@ -569,8 +579,8 @@ void demitir(){
 			for(j=0;j<F;j++){
 				a = strcmp(func[j].cpf,cpf);
 				if (a==0){
-					strcpy(func[j+1].cpf,func[j].cpf);
-					strcpy(func[j+1].nome,func[j].nome);
+					strcpy(func[j].cpf,func[j+1].cpf);
+					strcpy(func[j].nome,func[j+1].nome);
 					func[j].dt_nasc = func[j+1].dt_nasc;
 					func[j].dt_adm = func[j+1].dt_adm;
 					func[j].cargo = func[j+1].cargo;
@@ -587,23 +597,95 @@ void demitir(){
 //Objetivo: Mostrar a informaçoes de um funcionario especifico.
 void pesquisar(){
 	char cpf[12];
-	int a,j;
-	printf("Digite o cpf do funcionario: ");
-	scanf(" %s", cpf);
-	for(j=0;j<=i;j++){
-		a = strcmp(cpf,func[j].cpf);
-		if (a==0)
-			printf("Nome do funcionario: %s\n",func[j].nome);
+	int a,j,resp,cont=0,x;
+	
+	while(resp!=2){
+		printf("Qual o CPF do funcionario?: ");
+		scanf(" %s", cpf);
+		for(j=0;j<F;j++){
+			a = strcmp(func[j].cpf,cpf);
+			if(a==0){
+				cont++;
+				x = j;
+			}
+		}
+		if(cont==0){
+			printf("CPF %s nao cadastrado!\n", cpf);
+			printf("---------------\n0 - Retornar ao Menu Funcionario\n1 - Digitar um novo cpf\n---------------\n");
+			scanf(" %d", &resp);
+			if(resp==0)
+				return;
+		}
+		else{
+			printf("Funcionario %d\n", x+1);
+			printf("CPF: %s\n", func[x].cpf);
+			printf("Nome: %s\n", func[x].nome);
+			printf("Data de Nascimento: %d %d %d\n", func[x].dt_nasc.dia,func[x].dt_nasc.mes,func[x].dt_nasc.ano);
+			printf("Data de Admissao: %d %d %d\n", func[x].dt_adm.dia,func[x].dt_adm.mes,func[x].dt_adm.ano);
+			printf("Cargo: %d\n", func[x].cargo);
+			printf("Departamento: %d\n", func[x].dept);
+			printf("\n");
+			break;
+		}
 	}
 }
 
+//Objetivo: Listar todos os departamentos com todos os funcionario que o integram e suas respectivas informaçoes.
 void listarfunc(){
-	int j;
+	int j,k,cont=0;
 	printf("LISTA DE FUNCIONARIOS\n");
 	for(j=0;j<10;j++){
-		printf("--------------------\nDepartamento)
+		if(dep[j].cod==0){
+			cont++;
+		}
+		else{
+			printf("--------------------\nDepartamento %d\n--------------------\n", j+1);
+			for(k=0;k<F;k++){
+				if(func[k].dept==j+1){
+					printf("Funcionario %d\n", k+1);
+					printf("CPF: %s\n", func[k].cpf);
+					printf("Nome: %s\n", func[k].nome);
+					printf("Data de Nascimento: %d %d %d\n", func[k].dt_nasc.dia,func[k].dt_nasc.mes,func[k].dt_nasc.ano);
+					printf("Data de Admissao: %d %d %d\n", func[k].dt_adm.dia,func[k].dt_adm.mes,func[k].dt_adm.ano);
+					printf("Cargo: %d\n", func[k].cargo);
+					printf("\n");
+				}
+			}
+		}
 	}
 }
+
+//Objetivo: Listar todos os funcionarios com suas informaçoes de um departamento especifico.
+void listarTdep(){
+	int cod,j,cont=0;
+	
+	printf("Qual o codigo do departamento?: ");
+	scanf(" %d", &cod);
+	for(j=0;j<10;j++){
+		if(dep[j].cod == cod){
+			cont++;
+		}			
+	}
+	if(cont==0){
+		printf("Departamento %d nao existe!\n", cod);
+		return;
+	}
+	else{
+		printf("---------------\nDepartamento %d\n---------------\n", cod);
+		for(j=0;j<F;j++){
+			if(func[j].dept==cod){
+				printf("Funcionario %d\n", j+1);
+				printf("CPF: %s\n", func[j].cpf);
+				printf("Nome: %s\n", func[j].nome);
+				printf("Data de Nascimento: %d %d %d\n", func[j].dt_nasc.dia,func[j].dt_nasc.mes,func[j].dt_nasc.ano);
+				printf("Data de Admissao: %d %d %d\n", func[j].dt_adm.dia,func[j].dt_adm.mes,func[j].dt_adm.ano);
+				printf("Cargo: %d\n", func[j].cargo);
+				printf("\n");
+			}
+		}
+	}
+}
+
 
 //PARTE DOS MENUS
 
@@ -637,6 +719,7 @@ void menufunc(){
 	   			listarfunc();
 	   			break;
 	   		case 7:
+	   			listarTdep();
 	   			break;
 			default:
 				printf("Nop,para de tentar achar bug ai,vlw\n");
