@@ -185,7 +185,7 @@ void listardep(){
 //Objetivo: Excluir Departamentos.
 //Nessa funçao de excluir provavelmente usasse ponteiro.
 /*AINDA PRECISA-SE AJEITAR ESSA PORRA, QUANDO EXCLUI UM DEPARTAMENTO, EM VEZ DO SUCESSOR TOMAR O LUGAR
-DO EXCLUIDO ELE APENAS SE COPIAR PARA ESSA POSIÇAO.*/
+DO EXCLUIDO ELE APENAS SE COPIA PARA ESSA POSIÇAO.*/
 void excluirdep(){
 	int resp,cod,j,cont,x;
 	char resp2;
