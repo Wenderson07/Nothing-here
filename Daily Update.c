@@ -40,6 +40,8 @@ vir a dos funcionarios. */
 DEPARTAMENTO, CODIGO 1 == DEPARTAMENTO 1, NUM SEI SE É PRA FICAR ASSIM, MAS NO MOMENTO
 ESTA.*/
 
+/* Necessario tbm uma variavel para armazenar a quantidade de departamentos cadastrados.
+Ai pelo visto vai ter q usar outra variavel global ou achar um jeito pra ñ ser. */
 
 /*
 Objetivo: verificar se uma data eh valida.
@@ -79,6 +81,7 @@ int ValidarData(int dia,int mes,int ano){
 //PARTE DOS DEPARTAMENTOS
 
 //Objetivo: Criar Departamento.
+//AJEITAR NO FINAL: os prints do final.
 void criardep(){ 
 	int cod,i,cont=0,x,resp;
 
@@ -113,6 +116,7 @@ void criardep(){
 }
 
 //Objetivo: Alterar informaçoes do Departamento.
+//AJEITAR NO FINAL: os prints do final.
 void alterardep(){ 
 	int resp,i,cont=0,resp2;
 	while(resp2!=0){
@@ -569,7 +573,7 @@ void transferir(){
 //Objetivo: Demitir um funcionario.
 /*Quando se excluir um funcionario q esta outros dois ele invez de deslocar as informaçoes do sucessor
 para o lugar do excluido ele apenas faz eh copiar.*/ // < Agora so aparece esse problema se for ficar so um funcionario.
-//Aki provavelmente tbm deveria se usar ponteiro tbm.
+//Aki provavelmente tbm deveria se usar ponteiro.
 void demitir(){
 	int resp,j,cod,cont=0,x,y,a,b;
 	char cpf[12],resp2;
@@ -765,7 +769,7 @@ void listarTdep(){
 
 //PARTE DOS MENUS
 
-//Objetivo: acesso as configuraçoes de Funcionarios.
+//Objetivo: acessar as configuraçoes de Funcionarios.
 void menufunc(){
 	int resp;
 	printf("MENU FUNCIONARIO\n");
@@ -806,7 +810,7 @@ void menufunc(){
 	}
 }
 
-//Objetivo: acesso as configuraçoes de Departamentos.
+//Objetivo: acessar as configuraçoes de Departamentos.
 void menudep(){
 	int resp;
 	printf("MENU DEPARTAMENTO\n");
@@ -841,7 +845,7 @@ void menudep(){
 		}
 }
 
-//Objetivo: acessar os menus departamento e funcionario.
+//Objetivo: acessar os menus Departamento e Funcionario.
 void menuprin(){
 	int resp;
 	printf("MENU PRINCIPAL\n");
