@@ -2,8 +2,6 @@
 #include <string.h>
 #define F 4
 
-int i=0;
-
 typedef struct{
 	int dia,mes,ano;	
 }tdata;
@@ -20,7 +18,7 @@ typedef struct{
 typedef struct{
 	char nome[100];
 	int cod;
-	int quant; // Contador de funcionarios dentro do departamento
+	int quant;
 }tDepartamento;
 
 tFuncionario func[F];
@@ -40,13 +38,10 @@ vir a dos funcionarios. */
 DEPARTAMENTO, CODIGO 1 == DEPARTAMENTO 1, NUM SEI SE É PRA FICAR ASSIM, MAS NO MOMENTO
 ESTA.*/
 
-/* Necessario tbm uma variavel para armazenar a quantidade de departamentos cadastrados.
-Ai pelo visto vai ter q usar outra variavel global ou achar um jeito pra ñ ser. */
-
 /*
-Objetivo: verificar se uma data eh valida.
+Objetivo: Verificar se uma data eh valida.
 Parâmetros: dia, mes, ano.
-Retorno: 1 se for data valida ou 0 se nao. 
+Retorno: 1 se for data valida, 0 se nao. 
 */
 //NO FINAL, AJEITAR O ANO.
 int ValidarData(int dia,int mes,int ano){	
@@ -83,7 +78,7 @@ int ValidarData(int dia,int mes,int ano){
 //Objetivo: Criar Departamento.
 //AJEITAR NO FINAL: os prints do final.
 void criardep(){ 
-	int cod,i,cont=0,x,resp;
+	int cod,i,cont=0,x,resp; 
 
 	while(resp!=0){
 		printf("Qual o codigo do Departamento? ");
@@ -191,7 +186,7 @@ void listardep(){
 /*AINDA PRECISA-SE AJEITAR ESSA PORRA, QUANDO EXCLUI UM DEPARTAMENTO, EM VEZ DO SUCESSOR TOMAR O LUGAR
 DO EXCLUIDO ELE APENAS SE COPIA PARA ESSA POSIÇAO.*/
 void excluirdep(){
-	int resp,cod,j,cont,x;
+	int resp,cod,j,cont,x,y,sentinela;
 	char resp2;
 	
 	while(resp!=2){
@@ -232,16 +227,25 @@ void excluirdep(){
 		}
 		if(resp2=='s'){
 			for(j=0;j<10;j++){
+				if(dep[j].cod != 0){
+					y = j-1;
+				}
+			}
+			sentinela = dep[y].cod;
+			printf("%d\n", sentinela);
+			j = 0;
+			while(dep[j].cod != sentinela){
 				if(dep[j].cod == cod){
 					dep[j].cod=dep[j+1].cod;
 					strcpy(dep[j].nome,dep[j+1].nome);
 					dep[j].quant=dep[j+1].quant;
-					if(dep[j].cod!=0){
+					if(dep[j].cod != sentinela){
 						dep[j+1].cod=dep[x].cod;
 						strcpy(dep[j+1].nome,dep[x].nome);
 						dep[j+1].quant=dep[x].quant;
 					}
 				}
+				j++;
 			}
 			dep[10-1].cod=0;
 			strcpy(dep[10-1].nome,"");
@@ -257,6 +261,7 @@ void excluirdep(){
 
 //Objetivo: Cadastrar um novo funcionario.
 void cadastrar(){
+	static int i=0;
 	char cpf[12];
 	int a,j,x,y,z,resp=0,cont=1,cont2=0,resp2;
 	
@@ -571,8 +576,8 @@ void transferir(){
 }
 
 //Objetivo: Demitir um funcionario.
-/*Quando se excluir um funcionario q esta outros dois ele invez de deslocar as informaçoes do sucessor
-para o lugar do excluido ele apenas faz eh copiar.*/ // < Agora so aparece esse problema se for ficar so um funcionario.
+/*Quando se excluir um funcionario q esta entre outros dois ele invez de deslocar as informaçoes do sucessor
+para o lugar do excluido ele apenas faz copiar.*/ // < Agora so aparece esse problema se for ficar so um funcionario.
 //Aki provavelmente tbm deveria se usar ponteiro.
 void demitir(){
 	int resp,j,cod,cont=0,x,y,a,b;
