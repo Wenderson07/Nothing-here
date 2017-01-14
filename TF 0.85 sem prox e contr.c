@@ -799,7 +799,11 @@ void listarTdep(){
 
 //PARTE DOS MENUS
 
-//Objetivo: acessar as configuraçoes de Funcionarios.
+/*
+Objetivo: acessar as configurações de Funcionários.
+Parâmetro: Não apresenta.
+Retorno: Sem nenhum retorno.
+*/
 void menufunc(){
 	int resp;
 	printf("MENU FUNCIONARIO\n");
@@ -840,7 +844,12 @@ void menufunc(){
 	}
 }
 
-//Objetivo: acessar as configuraçoes de Departamentos.
+
+/*
+Objetivo: acessar as configurações de Departamentos.
+Parâmetro: Não apresenta.
+Retorno: Sem nenhum retorno.
+*/
 void menudep(){
 	int resp;
 	printf("MENU DEPARTAMENTO\n");
@@ -875,7 +884,12 @@ void menudep(){
 		}
 }
 
-//Objetivo: acessar os menus Departamento e Funcionario.
+
+/*
+Objetivo: acessar os menus Departamento e Funcionario.
+Parâmetro: Não apresenta.
+Retorno: Sem nenhum retorno.
+*/
 void menuprin(){
 	int resp;
 	printf("MENU PRINCIPAL\n");
