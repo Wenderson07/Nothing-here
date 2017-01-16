@@ -77,6 +77,7 @@ void criardep(){
 
 	while(resp!=0){
 		printf("Digite o código do Departamento: ");
+		fflush(stdin);
 		scanf(" %d", &cod);
 		for(i=0;i<10;i++){
 		    if(cod == dep[i].cod){
@@ -94,6 +95,7 @@ void criardep(){
 		else{
 			dep[qd].cod = cod;
 			printf("Digite o nome do Departamento: ");
+			fflush(stdin);
 			scanf(" %s", dep[qd].nome);
 			printf("Departamento criado com sucesso\n");
 			qd++;
@@ -276,11 +278,23 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void cadastrar(){
-	char cpf[12];
-	int a,b,j,x,y,z,resp=0,cont=1,cont2=0,resp2;
 	system("cls");
+	char cpf[12];
+	int a,b,j,x,y,z,resp=0,cont=1,cont2=0,cont3=0,resp2;
+	printf("========================MENU DE CADASTRO DE FUNCIONARIOS========================\n");
+	 for(j=0;j<10;j++){
+		   	if(dep[j].cod == 0){
+	   	   	cont3++;
+			}}
+	if(cont3==10){
+		printf("\nNão há Departamentos cadastrados\n");
+	   	printf("Retornando ao menu para que seja feito o cadastro........\n\n");
+	   	menuprin();
+}		
+	
 	while(resp!=2){
 		printf("Digite o CPF: ");
+		fflush(stdin);
    		scanf(" %s", cpf);
 		for(j=0;j<F;j++){
 			a = strcmp(cpf,func[j].cpf);
@@ -303,14 +317,17 @@ void cadastrar(){
 	}
 	
 	printf("Digite o nome: ");
+	fflush(stdin);
 	scanf(" %s", func[i].nome);
 	
 	printf("Digite a data de nascimento: ");
+	fflush(stdin);
 	scanf("%d %d %d", &func[i].dt_nasc.dia,&func[i].dt_nasc.mes,&func[i].dt_nasc.ano);
 	x = ValidarData(func[i].dt_nasc.dia,func[i].dt_nasc.mes,func[i].dt_nasc.ano);
 	while(x==0){
 		if(x==0){
 			printf("Data Inválida! Digite novamente: ");
+			fflush(stdin);
 			scanf("%d %d %d", &func[i].dt_nasc.dia,&func[i].dt_nasc.mes,&func[i].dt_nasc.ano);
 			x = ValidarData(func[i].dt_nasc.dia,func[i].dt_nasc.mes,func[i].dt_nasc.ano);
 		}
@@ -320,11 +337,13 @@ void cadastrar(){
 	}
 	
 	printf("Digite data de admissão na empresa: ");
+	fflush(stdin);
 	scanf("%d %d %d", &func[i].dt_adm.dia,&func[i].dt_adm.mes,&func[i].dt_adm.ano);
 	y = ValidarData(func[i].dt_adm.dia,func[i].dt_adm.mes,func[i].dt_adm.ano);
 	while(y==0){
 		if(y==0){
 			printf("Data Inválida! Digite novamente: ");
+			fflush(stdin);
 			scanf("%d %d %d", &func[i].dt_adm.dia,&func[i].dt_adm.mes,&func[i].dt_adm.ano);
 			y = ValidarData(func[i].dt_adm.dia,func[i].dt_adm.mes,func[i].dt_adm.ano);
 		}
@@ -334,11 +353,13 @@ void cadastrar(){
 	}
 	
 	printf("Digite o cargo: ");
+	fflush(stdin);
 	scanf(" %d", &func[i].cargo);
 	
 	resp2 = 2;
 	while(resp2!=0){
 		printf("Digite o Departamento: ");
+		fflush(stdin);
 	   	scanf(" %d", &func[i].dept);
 	   	cont2 = 0;
 	   
@@ -738,7 +759,11 @@ void listarfunc(){
 	
 	printf("LISTA DE FUNCIONARIOS\n");
 	for(j=0;j<10;j++){
-		if(dep[j].quant!=0){
+		if(dep[j].cod==0){
+			cont++;
+		}
+		else{
+			if(dep[j].quant!=0){
 				printf("--------------------\nDepartamento %d - Código %d\n--------------------\n", j+1,dep[j].cod);
 				for(k=0;k<F;k++){
 					if(func[k].dept==dep[j].cod){
@@ -754,6 +779,7 @@ void listarfunc(){
 			}
 		}
 	}
+}
 
 
 /*
@@ -810,7 +836,7 @@ void salvar_arquivos(){
 	
 	if (arquivo_func == NULL){
 		printf("Erro ao abrir o arquivo dos funcionários");
-		exit(1);} 
+		exit(0);} 
 		
 	else{
 		int j,k;	
@@ -826,7 +852,7 @@ void salvar_arquivos(){
 	arquivo_dep =fopen("departamento.bin","wb");
 	if(arquivo_dep == NULL){
 		printf("Erro ao abrir o arquivo dos departamentos");
-		exit(1);
+		exit(0);
 	}
 	else
 	{
