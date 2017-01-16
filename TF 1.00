@@ -4,7 +4,6 @@
 #include <locale.h>
 #define F 150
 int i = 0;
-int qd = 0;
 
 typedef struct{
 	int dia,mes,ano;	
@@ -71,6 +70,7 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void criardep(){ 
+	static int  qd = 0;
 	system("cls");
 	printf("========================ABA CADASTRAR DEPARTAMENTOS========================\n");
 	int cod,i,cont=0,resp; 
@@ -284,9 +284,9 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void cadastrar(){
-	system("cls");
 	char cpf[12];
 	int a,b,j,x,y,z,resp=0,cont=1,cont2=0,cont3=0,resp2;
+	system("cls");
 	printf("========================MENU DE CADASTRO DE FUNCIONARIOS========================\n");
 	 for(j=0;j<10;j++){
 		   	if(dep[j].cod == 0){
@@ -294,8 +294,8 @@ void cadastrar(){
 			}}
 	if(cont3==10){
 		printf("\nNão há Departamentos cadastrados\n");
-	   	printf("Retornando ao menu para que seja feito o cadastro........\n\n");
-	   	menuprin();
+	   	printf("Retornando ao menu  para que seja feito o cadastro........\n\n");
+	   	return;
 }		
 	
 	while(resp!=2){
@@ -493,7 +493,7 @@ void alterar(){
 				   		printf("Cargo alterado com sucesso!\n");
 				   	   	break;
 					default:
-				   		printf("Opção inválida");
+				   		printf("Opção inválida\n");
 				   		break;
 				}
 				printf("MENU ALTERAR FUNCIONÁRIO(CPF: %s)\n", cpf);
@@ -866,8 +866,8 @@ void salvar_arquivos(){
 	}
 	else
 	{
-	fwrite(dep,sizeof(tDepartamento),10,arquivo_dep);
-	fclose(arquivo_dep);}}
+	fwrite(dep,sizeof(tDepartamento),10,arquivo_dep);}
+	fclose(arquivo_dep);}
 	
 /*
 Objetivo: Carregar as informações de todos os funcionários
@@ -941,7 +941,7 @@ void menufunc(){
 	   			listarTdep();
 	   			break;
 			default:
-				printf("Opção inválida!");
+				printf("Opção inválida!\n");
 				break;
 		};
 		printf("===============\n1 - Cadastrar funcionário\n2 - Alterar dados do funcionário\n3 - Transferir funcionário de departamento\n4 - Demitir funcionário\n5 - Pesquisar funcionário\n6 - Listar todos os funcionários\n7 - Listar todos de um Departamento\n0 - Sair\n===============\n");
@@ -981,7 +981,7 @@ void menudep(){
 		   			excluirdep();
 		   			break;
 				default:
-					printf("Opção inválida!");
+					printf("Opção inválida!\n");
 					break;
 			};
 			printf("===============\n1 - Criar Departamento\n2 - Alterar nome do Departamento\n3 - Consultar Departamento\n4 - Listar Departamentos\n5 - Excluir Departamento\n0 - Sair\n===============\n");
@@ -1013,7 +1013,7 @@ void menuprin(){
 				menudep();
 				break;
 			default:
-				printf("Opção inválida!");
+				printf("Opção inválida!\n");
 				break;
 		};
 		printf("MENU PRINCIPAL\n");
