@@ -36,9 +36,8 @@ Objetivo: Verificar se uma data é valida.
 Parâmetros: dia, mes, ano.
 Retorno: 1 se for data valida, 0 se não. 
 */
-//NO FINAL, AJEITAR O ANO.
 int ValidarData(int dia,int mes,int ano){	
-	if((dia >= 1 && dia <= 31) && (mes >= 1 && mes <= 12) && (ano >= 00 && ano <= 99)){
+	if((dia >= 1 && dia <= 31) && (mes >= 1 && mes <= 12) && (ano >= 1900 && ano <= 2100)){
 		if(ano % 4 == 0 && (ano % 400 == 0 || ano % 100 != 0)){ 
 			if(dia == 29 && mes == 2){
 				return 1;
@@ -73,11 +72,14 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void criardep(){ 
+	system("cls");
+	printf("========================MENU CADASTRAR DEPARTAMENTOS========================\n");
+	
 	int cod,i,cont=0,resp; 
 
 	while(resp!=0){
 		printf("Digite o código do Departamento: ");
-		fflush(stdin);
+		setbuf(stdin,NULL);
 		scanf(" %d", &cod);
 		for(i=0;i<10;i++){
 		    if(cod == dep[i].cod){
@@ -95,7 +97,7 @@ void criardep(){
 		else{
 			dep[qd].cod = cod;
 			printf("Digite o nome do Departamento: ");
-			fflush(stdin);
+			setbuf(stdin,NULL);
 			scanf(" %s", dep[qd].nome);
 			printf("Departamento criado com sucesso\n");
 			qd++;
@@ -111,6 +113,9 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void alterardep(){ 
+	system("cls");
+	printf("========================MENU ALTERAR DEPARTAMENTO========================\n");
+	
 	int cod,i,cont=0,resp,x;
 	
 	while(resp != 0){
@@ -146,9 +151,12 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void consultardep(){
+	system("cls");
+	printf("========================MENU CONSULTAR DEPARTAMENTO========================\n");
+	
 	int cod,cont=0,i,x;
 	
-	printf("Qual o código do departamento? ");
+	printf("Digite o código do departamento: ");
 	scanf(" %d", &cod);
 	for(i=0;i<10;i++){
 		if(cod == dep[i].cod){
@@ -173,6 +181,9 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void listardep(){
+	system("cls");
+	printf("========================MENU LISTAR DEPARTAMENTO========================\n");
+	
 	int j,cont=0;
 	
 	for(j=0;j<10;j++){
@@ -198,6 +209,9 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void excluirdep(){
+	system("cls");
+	printf("========================MENU EXCLUIR DEPARTAMENTO========================\n");
+	
 	int resp,cod,j,cont,x,y,sentinela;
 	char resp2;
 	
@@ -244,19 +258,12 @@ void excluirdep(){
 				}
 			}
 			sentinela = dep[y].cod;
-			
 			j = 0;
 			while(dep[j].cod != sentinela){
 				if(dep[j].cod == cod){
 					dep[j].cod=dep[j+1].cod;
 					strcpy(dep[j].nome,dep[j+1].nome);
 					dep[j].quant=dep[j+1].quant;
-					
-				/*	if(dep[j].cod != sentinela){
-						dep[j+1].cod=dep[y-1].cod;
-						strcpy(dep[j+1].nome,dep[y-1].nome);
-						dep[j+1].quant=dep[y-1].quant;
-					}*/
 				}
 				j++;
 			}
@@ -279,22 +286,25 @@ Retorno: Sem nenhum retorno.
 */
 void cadastrar(){
 	system("cls");
+	
 	char cpf[12];
 	int a,b,j,x,y,z,resp=0,cont=1,cont2=0,cont3=0,resp2;
-	printf("========================MENU DE CADASTRO DE FUNCIONARIOS========================\n");
-	 for(j=0;j<10;j++){
-		   	if(dep[j].cod == 0){
-	   	   	cont3++;
-			}}
+	
+	printf("========================MENU CADASTRAR FUNCIONARIO========================\n");
+	for(j=0;j<10;j++){
+	 	if(dep[j].cod == 0){
+	 		cont3++;
+		}
+	}
 	if(cont3==10){
 		printf("\nNão há Departamentos cadastrados\n");
 	   	printf("Retornando ao menu para que seja feito o cadastro........\n\n");
 	   	menuprin();
-}		
+	}		
 	
 	while(resp!=2){
 		printf("Digite o CPF: ");
-		fflush(stdin);
+		setbuf(stdin,NULL);
    		scanf(" %s", cpf);
 		for(j=0;j<F;j++){
 			a = strcmp(cpf,func[j].cpf);
@@ -317,17 +327,17 @@ void cadastrar(){
 	}
 	
 	printf("Digite o nome: ");
-	fflush(stdin);
+	setbuf(stdin,NULL);
 	scanf(" %s", func[i].nome);
 	
 	printf("Digite a data de nascimento: ");
-	fflush(stdin);
+	setbuf(stdin,NULL);
 	scanf("%d %d %d", &func[i].dt_nasc.dia,&func[i].dt_nasc.mes,&func[i].dt_nasc.ano);
 	x = ValidarData(func[i].dt_nasc.dia,func[i].dt_nasc.mes,func[i].dt_nasc.ano);
 	while(x==0){
 		if(x==0){
 			printf("Data Inválida! Digite novamente: ");
-			fflush(stdin);
+			setbuf(stdin,NULL);
 			scanf("%d %d %d", &func[i].dt_nasc.dia,&func[i].dt_nasc.mes,&func[i].dt_nasc.ano);
 			x = ValidarData(func[i].dt_nasc.dia,func[i].dt_nasc.mes,func[i].dt_nasc.ano);
 		}
@@ -337,13 +347,13 @@ void cadastrar(){
 	}
 	
 	printf("Digite data de admissão na empresa: ");
-	fflush(stdin);
+	setbuf(stdin,NULL);
 	scanf("%d %d %d", &func[i].dt_adm.dia,&func[i].dt_adm.mes,&func[i].dt_adm.ano);
 	y = ValidarData(func[i].dt_adm.dia,func[i].dt_adm.mes,func[i].dt_adm.ano);
 	while(y==0){
 		if(y==0){
 			printf("Data Inválida! Digite novamente: ");
-			fflush(stdin);
+			setbuf(stdin,NULL);
 			scanf("%d %d %d", &func[i].dt_adm.dia,&func[i].dt_adm.mes,&func[i].dt_adm.ano);
 			y = ValidarData(func[i].dt_adm.dia,func[i].dt_adm.mes,func[i].dt_adm.ano);
 		}
@@ -353,13 +363,13 @@ void cadastrar(){
 	}
 	
 	printf("Digite o cargo: ");
-	fflush(stdin);
+	setbuf(stdin,NULL);
 	scanf(" %d", &func[i].cargo);
 	
 	resp2 = 2;
 	while(resp2!=0){
 		printf("Digite o Departamento: ");
-		fflush(stdin);
+		setbuf(stdin,NULL);
 	   	scanf(" %d", &func[i].dept);
 	   	cont2 = 0;
 	   
@@ -396,7 +406,10 @@ Objetivo: Alterar informaçoes de um funcionário.
 Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
-void alterar(){ 
+void alterar(){
+	system("cls");
+	printf("========================MENU ALTERAR DADOS DE FUNCIONARIO========================\n");
+	
 	char cpf[12],cpf2[12];
 	int j,a,cont=0,x,resp,resp2,resp3,cont2,b,c;
 	
@@ -418,8 +431,8 @@ void alterar(){
 				return;
 		}
 		else{
-			printf("MENU ALTERAR FUNCIONÁRIO(CPF: %s)\n", cpf);
-			printf("1 - CPF\n2 - Nome\n3 - Data de Nascimento\n4 - Data de Admissão na empresa\n5 - Cargo\n0 - Sair\n");
+			printf("MENU ALTERAR FUNCIONÁRIO(CPF: %s)\n", func[x].cpf);
+			printf("1 - CPF\n2 - Nome\n3 - Data de Nascimento\n4 - Data de Admissão na empresa\n5 - Cargo\n0 - Sair\n---------------\n");
 			scanf(" %d", &resp2);
 			
 			while(resp2!=0){
@@ -440,6 +453,7 @@ void alterar(){
 								printf("CPF %s já cadastrado!\n", cpf2);
 								printf("---------------\n0 - Voltar ao Menu Alterar Funcionário\n1 - Digitar um novo cpf\n---------------\n");
 								scanf(" %d", &resp3);
+								cont2 = 1;
 								if(resp3==0)
 									break;
 							}
@@ -496,8 +510,8 @@ void alterar(){
 				   		printf("Opção inválida");
 				   		break;
 				}
-				printf("MENU ALTERAR FUNCIONÁRIO(CPF: %s)\n", cpf);
-				printf("1 - CPF\n2 - Nome\n3 - Data de Nascimento\n4 - Data de Admissão na empresa\n5 - Cargo\n0 - Sair\n");
+				printf("MENU ALTERAR FUNCIONÁRIO(CPF: %s)\n", func[x].cpf);
+			    printf("1 - CPF\n2 - Nome\n3 - Data de Nascimento\n4 - Data de Admissão na empresa\n5 - Cargo\n0 - Sair\n---------------\n");
 				scanf(" %d", &resp2);
 			}
 			break;
@@ -512,6 +526,9 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void transferir(){
+	system("cls");
+	printf("========================MENU TRANSFERIR FUNCIONARIO========================\n");
+	
 	int resp,cod,j,cont=0,x,y,z,a,cod2;
 	char cpf[12];
 	
@@ -546,7 +563,7 @@ void transferir(){
 	while(resp!=2){
 		printf("Digite o cpf do funcionário: ");
 		scanf(" %s", cpf);
-		for(j=0;j<10;j++){
+		for(j=0;j<F;j++){
 			if(func[j].dept==cod){
 				a = strcmp(func[j].cpf,cpf);
 				if(a==0){
@@ -575,7 +592,6 @@ void transferir(){
 		for(j=0;j<10;j++){
 			if(dep[j].cod == cod2){
 				cont++;
-				z = j;
 			}			
 		}
 		if(cont==0){
@@ -591,7 +607,7 @@ void transferir(){
 				return;
 		}
 		else{
-			func[y].dept = z+1;
+			func[y].dept = cod2;
 			dep[x-1].quant = dep[x-1].quant - 1;
 			dep[z].quant++;
 			printf("Transferência realizada com sucesso!\n");
@@ -607,6 +623,9 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void demitir(){
+	system("cls");
+	printf("========================MENU DEMITIR FUNCIONARIO========================\n");
+	
 	int resp,j,cod,cont=0,x,y,a,b;
 	char cpf[12],resp2;
 	
@@ -714,6 +733,9 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void pesquisar(){
+	system("cls");
+	printf("========================MENU PESQUISAR FUNCIONARIO========================\n");
+	
 	char cpf[12];
 	int a,j,resp,cont=0,x;
 	
@@ -755,6 +777,8 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void listarfunc(){
+	system("cls");
+	
 	int j,k,cont=0;
 	
 	printf("LISTA DE FUNCIONARIOS\n");
@@ -788,6 +812,9 @@ Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
 void listarTdep(){
+	system("cls");
+	printf("========================MENU LISTA FUNCIONARIOS DE UM DEPARTAMENTO========================\n");
+	
 	int cod,x,j,cont=0;
 	
 	printf("Digite o codigo do departamento: ");
@@ -817,9 +844,6 @@ void listarTdep(){
 		}
 	}
 }
-
-
-
 
 
 //PARTE DOS ARQUIVOS
@@ -994,7 +1018,7 @@ void menuprin(){
 			case 0:
 				salvar_arquivos();
 				printf("Programa finalizado\n");
-				exit(1);
+				exit(0);
 			case 1:
 				menufunc();
 				break;
