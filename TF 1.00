@@ -204,7 +204,7 @@ Retorno: Sem nenhum retorno.
 void excluirdep(){
 	system("cls");
 	printf("========================ABA EXCLUIR DEPARTAMENTO========================\n");
-	int resp,cod,j,cont,x,y,sentinela;
+	int resp,cod,j,cont=0,x,y,sentinela;
 	char resp2;
 	
 	while(resp!=2){
@@ -257,13 +257,7 @@ void excluirdep(){
 					dep[j].cod=dep[j+1].cod;
 					strcpy(dep[j].nome,dep[j+1].nome);
 					dep[j].quant=dep[j+1].quant;
-					
-				/*	if(dep[j].cod != sentinela){
-						dep[j+1].cod=dep[y-1].cod;
-						strcpy(dep[j+1].nome,dep[y-1].nome);
-						dep[j+1].quant=dep[y-1].quant;
-					}*/
-				}
+			}
 				j++;
 			}
 			dep[x].cod=0;
@@ -390,7 +384,7 @@ void cadastrar(){
 
 
 /*
-Objetivo: Alterar informaçoes de um funcionário.
+Objetivo: Alterar informações de um funcionário.
 Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
@@ -762,17 +756,11 @@ Retorno: Sem nenhum retorno.
 */
 void listarfunc(){
 	system("cls");
-	printf("============ABA LISTA FUNCIONARIOS DE UM DEPARTAMENTO============\n");
-	
+	printf("\n========ABA LISTAR TODOS OS FUNCIONARIOS=======\n");
 	int j,k,cont=0;
-	
-	printf("LISTA DE FUNCIONARIOS\n");
 	for(j=0;j<10;j++){
-		if(dep[j].cod==0){
-			cont++;
-		}
-		else{
-			if(dep[j].quant!=0){
+		if(dep[j].quant!=0)
+		{
 				printf("--------------------\nDepartamento %d - Código %d\n--------------------\n", j+1,dep[j].cod);
 				for(k=0;k<F;k++){
 					if(func[k].dept==dep[j].cod){
@@ -788,7 +776,6 @@ void listarfunc(){
 			}
 		}
 	}
-}
 
 
 /*
@@ -951,7 +938,7 @@ void menufunc(){
 
 
 /*
-Objetivo: acessar as configurações de Departamentos.
+Objetivo: Acessar as configurações de Departamentos.
 Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
@@ -991,7 +978,7 @@ void menudep(){
 
 
 /*
-Objetivo: acessar os menus Departamento e Funcionário.
+Objetivo: Acessar os menus Departamento e Funcionário.
 Parâmetro: Não apresenta.
 Retorno: Sem nenhum retorno.
 */
@@ -1005,7 +992,7 @@ void menuprin(){
 			case 0:
 				salvar_arquivos();
 				printf("Programa finalizado\n");
-				exit(1);
+				exit(0);
 			case 1:
 				menufunc();
 				break;
