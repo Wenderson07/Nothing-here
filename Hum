@@ -1,0 +1,36 @@
+typedef struct{
+	char nome[20];
+	int tam;
+}tApp;
+
+void carregar_Arquivos(tApp *p){
+	FILE *leitura;
+	int i=0;
+	
+	leitura = fopen("teste2.txt", "r");
+	
+	if(leitura == NULL){
+		printf("Não possível abrir o arquivo.\n");
+		exit(0);
+	}
+	else{
+		while((fscanf(leitura,"%s %d\n", &p[i].nome,&p[i].tam))!= EOF){
+			i++;
+		}
+	}
+	
+	fclose(leitura);	
+}
+
+int main(){
+	int i;
+	setlocale(LC_ALL,"Portuguese");
+	tApp apps_store[20];
+	carregar_Arquivos(&apps_store[0]);
+	
+	for(i=0;i<20;i++){
+		printf("%d ", apps_store[i].tam);
+	}
+	
+	return 0;
+}
