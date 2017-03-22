@@ -1,0 +1,218 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <string.h>
+#include <windows.h>
+
+
+#define T 10
+
+
+
+   
+   
+typedef struct 
+{
+	int tam;
+	char nome[30];
+}App;
+App apps[T];
+App apps_instalados[T];
+
+int total;
+
+
+
+int consultar(){
+	int resposta,i;
+	printf("1-Consultar\n2-Organizar\n");
+	scanf("%d",&resposta);
+	switch(resposta)
+	{
+	case 1:
+	;
+		break;
+	default:
+		ordem();
+		break;
+	}
+	for(i=0;i<T;i++){
+		printf("%d\n",apps[i]);
+	}
+}
+
+int ordem(instalando){
+	App aux[1];
+	int i;
+	
+	
+	 for(i=0;i<T;i++){
+			if((instalando >= apps[i].tam) && (apps[i].tam != -1)){
+				printf("foi ");
+				printf("%d",apps[i].tam);
+				continue;}
+				else
+				{
+					
+					aux[1] =  apps[i];
+					apps[i] =apps[i +1];
+					apps[i] =aux[1];				 	   
+				}}
+				
+}
+
+
+int store(){
+	system("cls");
+	int i,j,resposta;
+	printf("_____________________STORE_________________________________\n|");
+	for (i=0;i<T;i++){		
+	printf("  Aplicativo %d: Nome:%s|\n|  Tam:%d|\n|",i+1,apps[i].nome,apps[i].tam);
+		}
+	printf("____________________________________________________________\n");
+	printf("  Digite o código do aplicativo que você deseja instalar: ");
+	scanf("  %d",&resposta);
+	
+
+	apps_instalados[i] = apps[resposta];
+	
+			
+
+}
+
+int meus_apps(){
+	system("cls");
+	printf("MEUSAPPS\n");
+	
+	
+	
+	
+}
+
+int room(){
+	int j;
+	char nome[30];
+	printf("RUM\NAPLICATIVOS EM EXECUÇÃO ");
+	scanf(" %s",nome);	
+}
+
+
+
+int instalar(){
+	system("cls");
+	int i,j,k;
+	FILE *aplicativos;
+	
+	aplicativos=fopen("aplicativos.txt","w");	
+	if (aplicativos == NULL){
+		printf(" Erro ao abrir o arquivo dos aplicativos");
+		exit(0);} 
+		
+	else{					
+	}				
+
+	printf("Digite o apk:\n\n");
+	for(i=0;i<4;i++){		
+		scanf("%s%d",&apps[i].nome,&apps[i].tam);
+		ordem(apps[i].tam);	
+		fprintf(aplicativos,"%s\n",apps[i].nome);
+		fprintf(aplicativos,"%d",apps[i].tam);
+		
+			}
+		fclose(aplicativos);							
+			
+	}
+	
+
+/*	
+
+int salvar_dados(){
+	FILE *aplicativos;
+	FILE *aplicativos_instalados;
+
+	if (CreateDirectory("Data",NULL)){
+		printf("Pasta criada com sucesso\n");
+	   (CreateFile("Data/aplicativos.txt",GENERIC_READ,0,NULL,CREATE_NEW,FILE_ATTRIBUTE_NORMAL,NULL));
+	}
+	else{
+		printf("Erro ao criar a pasta data");
+	}
+	aplicativos=fopen("Data/aplicativos.txt","w");
+	
+	if (aplicativos == NULL){
+		printf("Erro ao abrir o arquivo dos aplicativos");
+		exit(0);} 
+		
+	else{					
+	}				
+
+	fclose(aplicativos);
+	
+	
+}
+*/
+
+int carregar_dados(){
+	int i=0,count,parada;
+	FILE *leitura_apps;
+ 	 leitura_apps = fopen("aplicativos.txt","r");
+ 	 
+	if(leitura_apps== NULL){
+		return;
+		}
+	else
+	{
+		while(parada != -1)
+		{
+				  		
+		((parada =fscanf(leitura_apps,"%s %d\n",&apps[i].nome, &apps[i].tam))!=EOF);
+		i++;
+	}  }
+	
+	fclose(leitura_apps);
+	
+	
+	
+}
+
+void desktop(){
+
+	int resp;
+	printf("1-Store\n2-Meus Apss\n3-Sair\n");
+	scanf("%d",&resp);
+	switch(resp)
+	{
+	case 1:
+		store();
+		break;
+	case 2:
+		meus_apps();
+		break;
+	case 5:
+		instalar();
+		break;
+	case 3:
+			exit(1);
+	case 8:
+		consultar();		
+	default:
+		printf("Digite uma aba valida\n");
+		desktop();
+		break;
+	}	
+	
+	return main();
+}
+
+
+int main(){
+	printf("%d",total);
+	setlocale(LC_ALL,"Portuguese");
+	SetConsoleTitle("MobileED");
+	system("color 0a");
+	carregar_dados();
+	desktop();
+	
+
+}
+
