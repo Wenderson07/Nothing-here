@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <windows.h>
+#define T 10
+
+
+typedef struct 
+{
+	int tam;
+	char nome[30];
+}App;
+App apps[T];
+App apps_instalados[T];
+App aux;
+
+
+
+
+int ordenar(App instalando){
+	int i;
+ for(i=0;i<3 ;i++){
+ 	printf("vetor = %d\n",apps[i].tam);
+			if((instalando.tam >= apps[i].tam) && (apps[i].tam != -1)){
+				continue;}
+				else
+				{					
+					aux =  apps[i];
+					apps[i] = instalando;
+					instalando =aux; 				 	   
+				}
+								
+				
+				printf("vetor = %d\n",apps[i].tam);
+				}
+
+}
+				
+				
+int instalar(){
+	system("cls");
+	int i,j,k;
+	FILE *aplicativos;
+	
+	aplicativos=fopen("aplicativos.txt","w");	
+	if (aplicativos == NULL){
+		printf(" Erro ao abrir o arquivo dos aplicativos");
+		exit(0);} 
+		
+	else{					
+	}				
+
+	printf("Digite o apk:\n\n");
+	for(i=0;i<4;i++){		
+		scanf("%s%d",&apps[i].nome,&apps[i].tam);
+		ordenar(apps[i]);	
+		fprintf(aplicativos,"%s\n",apps[i].nome);
+		fprintf(aplicativos,"%d",apps[i].tam);
+		
+			}
+		fclose(aplicativos);							
+			
+	}
+int main(){
+	instalar();
+	
+}
+	
